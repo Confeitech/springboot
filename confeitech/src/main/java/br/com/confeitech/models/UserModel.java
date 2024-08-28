@@ -25,5 +25,6 @@ public class UserModel {
     private String phone;
     @Column(name = "dtNasc",nullable = false)
     private LocalDate birthDate;
-
+    @Column(name = "ativo", nullable = false)
+    private Boolean active;
 }
