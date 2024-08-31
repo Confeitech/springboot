@@ -1,4 +1,4 @@
-package br.com.confeitech.configs;
+package br.com.confeitech.infra.configs;
 
 
 import org.springframework.context.annotation.Bean;

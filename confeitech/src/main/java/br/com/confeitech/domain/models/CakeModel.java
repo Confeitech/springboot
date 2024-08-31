@@ -1,4 +1,4 @@
-package br.com.confeitech.models;
+package br.com.confeitech.domain.models;
 
 
 import jakarta.persistence.*;
@@ -12,7 +12,7 @@ import lombok.Setter;
 public class CakeModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "nome", nullable = false)
     private String name;
@@ -26,5 +26,7 @@ public class CakeModel {
     private Boolean containsGluten;
     @Column(name = "contemLactose", nullable = false)
     private Boolean containsLactose;
+    @Column(name = "ativo", nullable = false)
+    private Boolean active;
 
 }
