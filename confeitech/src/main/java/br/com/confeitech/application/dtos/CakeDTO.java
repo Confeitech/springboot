@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 
 public record CakeDTO(
 
+        Long id,
         @NotBlank(message = "O nome do bolo é um campo obrigatório")
         @Size(max = 255, message = "Nome do bolo longo demais!")
         @JsonProperty("nome")

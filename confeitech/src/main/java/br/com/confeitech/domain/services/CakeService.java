@@ -1,18 +1,16 @@
 package br.com.confeitech.domain.services;
 
 import br.com.confeitech.application.dtos.CakeDTO;
-import br.com.confeitech.application.dtos.UserCreatedDTO;
-import br.com.confeitech.application.dtos.UserDTO;
 import br.com.confeitech.application.exceptions.ApplicationExceptionHandler;
+import br.com.confeitech.application.utils.Ordenacao;
 import br.com.confeitech.domain.models.CakeModel;
-import br.com.confeitech.domain.models.UserModel;
 import br.com.confeitech.infra.persistence.mappers.CakeMapper;
 import br.com.confeitech.infra.persistence.repositories.CakeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,7 +18,7 @@ import java.util.stream.Collectors;
 import static br.com.confeitech.application.utils.MessageUtils.*;
 
 @Service
-public class CakeService {
+public class CakeService implements Ordenacao<CakeModel> {
 
     @Autowired
     private CakeRepository cakeRepository;
@@ -37,10 +35,27 @@ public class CakeService {
             throw new ApplicationExceptionHandler(CAKES_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
 
-        return  cakes// Busca todos os usuários do repositório
-                .stream() // Converte a lista de UserModel para um Stream
-                .map(cakeMapper::cakeModelToCakeDTO) // Mapeia cada UserModel para um UserCreatedDTO
-                .collect(Collectors.toList()); // Coleta o resultado do Stream em uma lista de UserCreatedDTO
+        return  cakes
+                .stream()
+                .map(cakeMapper::cakeModelToCakeDTO)
+                .collect(Collectors.toList());
+    }
+
+
+    public List<CakeDTO> getCakesByAlfabeticalOrder() {
+
+        List<CakeModel> cakes = cakeRepository.findAll();
+
+        if(cakes.isEmpty()) {
+            throw new ApplicationExceptionHandler(CAKES_NOT_FOUND, HttpStatus.NOT_FOUND);
+        }
+
+        cakes = ordenarListaEmOrdemAlfabetica(cakes);
+
+        return  cakes
+                .stream()
+                .map(cakeMapper::cakeModelToCakeDTO)
+                .collect(Collectors.toList());
     }
 
     public CakeDTO getCake(Long id) {
@@ -103,5 +118,16 @@ public class CakeService {
         }
 
         return optionalCake.get();
+    }
+
+
+    @Override
+    public List<CakeModel> ordenarListaEmOrdemAlfabetica(List<CakeModel> listaDesordenada) {
+
+        List<CakeModel> listaOrdenada = listaDesordenada.stream()
+                .sorted(Comparator.comparing(CakeModel::getName))
+                .collect(Collectors.toList());
+
+        return listaOrdenada;
     }
 }

@@ -3,6 +3,8 @@ package br.com.confeitech.domain.services;
 import br.com.confeitech.application.dtos.UserCreatedDTO;
 import br.com.confeitech.application.dtos.UserDTO;
 import br.com.confeitech.application.exceptions.ApplicationExceptionHandler;
+import br.com.confeitech.application.utils.Ordenacao;
+import br.com.confeitech.domain.models.CakeModel;
 import br.com.confeitech.infra.persistence.mappers.UserMapper;
 import br.com.confeitech.domain.models.UserModel;
 import br.com.confeitech.infra.persistence.repositories.UserRepository;
@@ -13,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,7 +25,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CONFLICT;
 
 @Service
-public class UserService {
+public class UserService implements Ordenacao<UserModel> {
 
     @Autowired
     private UserMapper userMapper;
@@ -47,6 +50,22 @@ public class UserService {
         if(users.isEmpty()) {
             throw new ApplicationExceptionHandler(USERS_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
+
+        return  users// Busca todos os usuários do repositório
+                .stream() // Converte a lista de UserModel para um Stream
+                .map(userMapper::userModelToUserCreatedDTO) // Mapeia cada UserModel para um UserCreatedDTO
+                .collect(Collectors.toList()); // Coleta o resultado do Stream em uma lista de UserCreatedDTO
+    }
+
+    public List<UserCreatedDTO> getUserPerAlphabeticalOrder() {
+
+        List<UserModel> users = userRepository.findAll();
+
+        if(users.isEmpty()) {
+            throw new ApplicationExceptionHandler(USERS_NOT_FOUND, HttpStatus.NOT_FOUND);
+        }
+
+        users = ordenarListaEmOrdemAlfabetica(users);
 
         return  users// Busca todos os usuários do repositório
                 .stream() // Converte a lista de UserModel para um Stream
@@ -182,9 +201,13 @@ public class UserService {
         return optionalUser.get();
     }
 
+    @Override
+    public List<UserModel> ordenarListaEmOrdemAlfabetica(List<UserModel> listaDesordenada) {
 
+        List<UserModel> listaOrdenada = listaDesordenada.stream()
+                .sorted(Comparator.comparing(UserModel::getName))
+                .collect(Collectors.toList());
 
-
-
-
+        return listaOrdenada;
+    }
 }

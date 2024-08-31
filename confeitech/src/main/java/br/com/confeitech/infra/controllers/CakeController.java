@@ -27,6 +27,11 @@ public class CakeController {
         return ResponseEntity.ok().body(cakeService.getCake(id));
     }
 
+    @GetMapping("/getAlphabetical")
+    public ResponseEntity<?> getCakesPerAlphabeticalOrder() {
+        return ResponseEntity.ok().body(cakeService.getCakesByAlfabeticalOrder());
+    }
+
     @PostMapping
     public ResponseEntity<?> saveCake(@RequestBody @Valid CakeDTO cakeDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(cakeService.saveCake(cakeDTO));

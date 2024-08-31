@@ -8,8 +8,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CakeMapper {
 
-    CakeDTO cakeModelToCakeDTO(CakeModel cakeModel);
-
     @Mapping(constant = "true", target = "active")
     CakeModel cakeDTOToCakeModel(CakeDTO cakeDTO);
+
+    @Mapping(source = "id", target = "id")
+    CakeDTO cakeModelToCakeDTO(CakeModel cakeModel);
 }

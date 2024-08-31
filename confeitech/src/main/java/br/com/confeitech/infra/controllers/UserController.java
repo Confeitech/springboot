@@ -27,6 +27,11 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUser(id));
     }
 
+    @GetMapping("/getAlphabetical")
+    public ResponseEntity<?> getUsersPerAlphabeticalOrder() {
+        return ResponseEntity.ok().body(userService.getUserPerAlphabeticalOrder());
+    }
+
     @PostMapping
     public ResponseEntity<?> saveUser(@RequestBody @Valid UserDTO userDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(userDTO));
