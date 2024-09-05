@@ -8,6 +8,7 @@ import br.com.confeitech.domain.models.CakeModel;
 import br.com.confeitech.infra.persistence.mappers.UserMapper;
 import br.com.confeitech.domain.models.UserModel;
 import br.com.confeitech.infra.persistence.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,9 @@ public class UserService implements Ordenacao<UserModel> {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private EnderecoService enderecoService;
 
 
 
@@ -92,6 +96,7 @@ public class UserService implements Ordenacao<UserModel> {
      * @return Um objeto UserCreatedDTO representando o usuário recém-criado com as informações processadas.
      * @throws ApplicationExceptionHandler se um usuário com o mesmo e-mail já existir no repositório.
      */
+    @Transactional
     public UserCreatedDTO saveUser(UserDTO userDTO) {
 
         // Verifica se o e-mail fornecido já está cadastrado no repositório de usuários
@@ -105,6 +110,8 @@ public class UserService implements Ordenacao<UserModel> {
         // Salva o objeto UserModel no repositório de usuários
         UserModel user = userMapper.userDTOToUserModel(userDTO);
         user.setPassword(passwordEncoder.encode(userDTO.password()));
+
+        enderecoService.saveEndereco(userDTO.cep());
         userRepository.save(user);
 
         // Converte o objeto UserModel salvo para um objeto UserCreatedDTO e o retorna

@@ -24,6 +24,10 @@ public record UserDTO(
         @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "Padrão de data inválido, utilize o padrão yyyy/MM/dd")
         @JsonProperty("dtNasc")
         String birthDate,
+
+        @NotBlank(message = "O CEP é um campo obrigatório")
+        String cep,
+
         @JsonProperty("ativo")
         Boolean active
 ) {
