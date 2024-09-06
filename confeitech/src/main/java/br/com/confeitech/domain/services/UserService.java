@@ -49,7 +49,7 @@ public class UserService implements Ordenacao<UserModel> {
      */
     public List<UserCreatedDTO> getUsers() {
 
-        List<UserModel> users = userRepository.findAll();
+        List<UserModel> users = userRepository.findByActive(true);
 
         if(users.isEmpty()) {
             throw new ApplicationExceptionHandler(USERS_NOT_FOUND, HttpStatus.NOT_FOUND);

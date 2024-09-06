@@ -29,7 +29,7 @@ public class CakeService implements Ordenacao<CakeModel> {
 
     public List<CakeDTO> getCakes() {
 
-        List<CakeModel> cakes = cakeRepository.findAll();
+        List<CakeModel> cakes = cakeRepository.findByActive(true);
 
         if(cakes.isEmpty()) {
             throw new ApplicationExceptionHandler(CAKES_NOT_FOUND, HttpStatus.NOT_FOUND);
