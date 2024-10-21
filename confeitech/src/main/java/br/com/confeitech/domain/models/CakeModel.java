@@ -1,9 +1,12 @@
 package br.com.confeitech.domain.models;
 
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "bolo")
@@ -14,6 +17,10 @@ public class CakeModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Lob
+    private byte[] imagem;
+
     @Column(name = "nome", nullable = false)
     private String name;
     @Column(name = "peso", nullable = false)
@@ -22,10 +29,19 @@ public class CakeModel {
     private Double price;
     @Column(name = "descricao", columnDefinition = "TEXT")
     private String description;
-    @Column(name = "contemGluten", nullable = false)
-    private Boolean containsGluten;
-    @Column(name = "contemLactose", nullable = false)
-    private Boolean containsLactose;
+
+    @ManyToMany
+    @JoinTable(
+            name = "bolo_has_adicional", // Tabela de junção
+            joinColumns = @JoinColumn(name = "bolo_id"),
+            inverseJoinColumns = @JoinColumn(name = "adicional_id")
+    )
+    private Set<AdicionalModel> adicionais;
+
+    @OneToMany(mappedBy = "bolo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<EncomendaModel> encomendas;
+
+
     @Column(name = "ativo", nullable = false)
     private Boolean active;
 

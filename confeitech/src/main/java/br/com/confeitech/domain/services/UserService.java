@@ -69,7 +69,7 @@ public class UserService implements Ordenacao<UserModel> {
             throw new ApplicationExceptionHandler(USERS_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
 
-        users = ordenarListaEmOrdemAlfabetica(users);
+        users = ordenarListaEmOrdemAlfabetica(users, 0, users.size() -1);
 
         return  users// Busca todos os usuários do repositório
                 .stream() // Converte a lista de UserModel para um Stream
@@ -209,7 +209,7 @@ public class UserService implements Ordenacao<UserModel> {
     }
 
     @Override
-    public List<UserModel> ordenarListaEmOrdemAlfabetica(List<UserModel> listaDesordenada) {
+    public List<UserModel> ordenarListaEmOrdemAlfabetica(List<UserModel> listaDesordenada, int indMenor, int indMaior) {
 
         List<UserModel> listaOrdenada = listaDesordenada.stream()
                 .sorted(Comparator.comparing(UserModel::getName))

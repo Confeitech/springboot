@@ -1,10 +1,16 @@
 package br.com.confeitech.application.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.Set;
+
+@JsonPropertyOrder({"id", "nome", "peso", "preco", "descricao", "contemGluten", "contemLactose", "ativo", "adicionais"})
 public record CakeDTO(
 
         Long id,
@@ -20,12 +26,9 @@ public record CakeDTO(
         Double price,
         @JsonProperty("descricao")
         String description,
-        @JsonProperty("contemGluten")
-        Boolean containsGluten,
-        @JsonProperty("contemLactose")
-        Boolean containsLactose,
+        List<AdicionalDTO> adicionais,
+
         @JsonProperty("ativo")
         Boolean active
-
 ) {
 }
