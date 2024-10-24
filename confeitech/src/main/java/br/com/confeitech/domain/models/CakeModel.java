@@ -18,6 +18,7 @@ public class CakeModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @Lob
     private byte[] imagem;
 

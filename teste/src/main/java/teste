@@ -1,0 +1,101 @@
+csv
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+public class CSVExample {
+    public static void main(String[] args) {
+        String filePath = "example.csv";
+
+        try (FileWriter fileWriter = new FileWriter(filePath);
+             PrintWriter printWriter = new PrintWriter(fileWriter)) {
+
+            // Escrevendo o cabeçalho do CSV
+            printWriter.println("ID,Name,Email,Age");
+
+            // Escrevendo algumas linhas de dados
+            printWriter.println("1,John Doe,john.doe@example.com,25");
+            printWriter.println("2,Jane Smith,jane.smith@example.com,30");
+            printWriter.println("3,Bob Johnson,bob.johnson@example.com,22");
+
+            System.out.println("CSV file created successfully!");
+
+        } catch (IOException e) {
+            System.err.println("Error while writing CSV file: " + e.getMessage());
+        }
+    }
+}
+
+
+
+
+
+
+pesquisa binária
+
+    public static int binarySearch(int[] array, int target) {
+        int left = 0;
+        int right = array.length - 1;
+
+        while (left <= right) {
+            int middle = left + (right - left) / 2; // Evita estouro de int
+
+            // Verifica se o elemento do meio é o alvo
+            if (array[middle] == target) {
+                return middle; // Retorna o índice do elemento
+            }
+
+            // Se o alvo é maior que o elemento do meio, ignore a metade esquerda
+            if (array[middle] < target) {
+                left = middle + 1;
+            }
+            // Se o alvo é menor, ignore a metade direita
+            else {
+                right = middle - 1;
+            }
+        }
+
+        // Se não for encontrado, retorna -1
+        return -1;
+    }
+
+
+
+
+
+public static void quickSort(int[] array, int low, int high) {
+        if (low < high) {
+            // Encontra o índice de partição
+            int pi = partition(array, low, high);
+
+            // Recursivamente ordena as duas subpartes
+            quickSort(array, low, pi - 1);  // Lado esquerdo do pivô
+            quickSort(array, pi + 1, high); // Lado direito do pivô
+        }
+    }
+
+    // Método para particionar o array e encontrar o índice de partição
+    public static int partition(int[] array, int low, int high) {
+        int pivot = array[high]; // Pivô sendo o último elemento
+        int i = low - 1;         // Índice do menor elemento
+
+        for (int j = low; j < high; j++) {
+            // Se o elemento atual for menor ou igual ao pivô
+            if (array[j] <= pivot) {
+                i++;
+
+                // Troca array[i] com array[j]
+                int temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+
+        // Troca o pivô com o elemento após o menor elemento
+        int temp = array[i + 1];
+        array[i + 1] = array[high];
+        array[high] = temp;
+
+        return i + 1; // Retorna o índice do pivô
+    }
