@@ -30,6 +30,14 @@ public class EncomendaController {
         return ResponseEntity.ok().body(encomendaService.getEncomendaPerId(id));
     }
 
+    @GetMapping("/gerarCSV")
+    public ResponseEntity<String> gerarCSV() {
+
+        encomendaService.gerarCSV();
+        return ResponseEntity.ok().body("Relatório CSV criado com sucesso!");
+    }
+
+
     @PostMapping
     public ResponseEntity<EncomendaDTO> saveEncomenda(@RequestBody @Valid EncomendaDTO encomendaDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(encomendaService.saveEncomenda(encomendaDTO));

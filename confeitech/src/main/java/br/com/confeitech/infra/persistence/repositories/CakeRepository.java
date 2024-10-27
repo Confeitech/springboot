@@ -10,4 +10,5 @@ public interface CakeRepository extends JpaRepository<CakeModel, Long> {
 
     List<CakeModel> findByActive(Boolean active);
     Optional<CakeModel> findByIdAndActive(Long id, Boolean active);
+
 }

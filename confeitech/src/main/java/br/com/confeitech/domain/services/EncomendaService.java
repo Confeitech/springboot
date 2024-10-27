@@ -5,6 +5,7 @@ import br.com.confeitech.application.dtos.AndamentoDTO;
 import br.com.confeitech.application.dtos.CakeDTO;
 import br.com.confeitech.application.dtos.EncomendaDTO;
 import br.com.confeitech.application.exceptions.ApplicationExceptionHandler;
+import br.com.confeitech.application.utils.EscritorCSV;
 import br.com.confeitech.domain.enums.AndamentoEncomenda;
 import br.com.confeitech.domain.models.AdicionalModel;
 import br.com.confeitech.domain.models.CakeModel;
@@ -111,8 +112,20 @@ public class EncomendaService {
         }
 
         return encomendas;
+    }
 
-        }
+    public void gerarCSV() {
 
+        List<EncomendaDTO> encomendas = getEncomendas();
+
+        EscritorCSV.Escrever(pegarBoloMaisVendido(), encomendas.size());
+
+
+    }
+
+    public String pegarBoloMaisVendido() {
+
+        return encomendaRepository.findMostFrequentNome().get();
+    }
 
 }

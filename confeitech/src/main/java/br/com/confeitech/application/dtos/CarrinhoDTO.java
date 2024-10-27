@@ -12,7 +12,6 @@ public record CarrinhoDTO(
         Long id,
         @NotNull(message = "O preço total é um campo obrigatório!")
         Double precoTotal,
-        String descricao,
         LocalDate dataCompra,
         @NotNull(message = "A data da retirada é um campo obrigatório!")
         LocalDateTime dataRetirada,

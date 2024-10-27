@@ -117,21 +117,48 @@ public class AdicionalService {
 
     }
 
+//    public Set<AdicionalModel> retornarListaParaMapeamento(List<AdicionalDTO> adicionaisDTOS) {
+//
+//        Set<AdicionalModel> adicionais = new HashSet<>();
+//        AdicionalModel adicionalModel = new AdicionalModel();
+//
+//        for(AdicionalDTO adicionalDTO : adicionaisDTOS) {
+//
+//            Optional<AdicionalModel> adicional = adicionalRepository.findByNome(adicionalDTO.nome());
+//
+//            adicionalModel = adicional.orElseGet(() -> adicionalMapper.adicionalDTOToAdicionalModel(saveAdicionais(adicionalDTO)));
+//
+//
+//
+//            adicionais.add(adicionalModel);
+//        }
+//
+//        return adicionais;
+//    }
+
     public Set<AdicionalModel> retornarListaParaMapeamento(List<AdicionalDTO> adicionaisDTOS) {
+        return retornarListaRecursiva(adicionaisDTOS, 0, new HashSet<>());
+    }
 
-        Set<AdicionalModel> adicionais = new HashSet<>();
-        AdicionalModel adicionalModel = new AdicionalModel();
-
-        for(AdicionalDTO adicionalDTO : adicionaisDTOS) {
-
-            Optional<AdicionalModel> adicional = adicionalRepository.findByNome(adicionalDTO.nome());
-
-            adicionalModel = adicional.orElseGet(() -> adicionalMapper.adicionalDTOToAdicionalModel(saveAdicionais(adicionalDTO)));
-
-
-            adicionais.add(adicionalModel);
+    private Set<AdicionalModel> retornarListaRecursiva(List<AdicionalDTO> adicionaisDTOS, int index, Set<AdicionalModel> adicionais) {
+        // Caso base: se o índice alcançar o final da lista, retorna o conjunto acumulado
+        if (index >= adicionaisDTOS.size()) {
+            return adicionais;
         }
 
-        return adicionais;
+        AdicionalDTO adicionalDTO = adicionaisDTOS.get(index);
+
+        // Busca o AdicionalModel correspondente ao AdicionalDTO atual
+        Optional<AdicionalModel> adicional = adicionalRepository.findByNome(adicionalDTO.nome());
+
+        // Mapeia o adicionalDTO para AdicionalModel, se necessário
+        AdicionalModel adicionalModel = adicional.orElseGet(() -> adicionalMapper.adicionalDTOToAdicionalModel(saveAdicionais(adicionalDTO)));
+
+        // Adiciona ao conjunto
+        adicionais.add(adicionalModel);
+
+        // Chama recursivamente para o próximo índice
+        return retornarListaRecursiva(adicionaisDTOS, index + 1, adicionais);
     }
+
 }

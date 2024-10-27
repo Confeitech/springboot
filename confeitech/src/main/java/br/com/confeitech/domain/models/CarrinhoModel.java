@@ -23,8 +23,6 @@ public class CarrinhoModel {
 
     @Column(nullable = false)
     private Double precoTotal;
-    @Column(columnDefinition = "TEXT")
-    private String descricao;
     @Column(nullable = false)
     private LocalDate dataCompra;
     @Column(nullable = false)
