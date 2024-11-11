@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cakes")
+@CrossOrigin(origins = "*")
 public class CakeController {
 
     @Autowired

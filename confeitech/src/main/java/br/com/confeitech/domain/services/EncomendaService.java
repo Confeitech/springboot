@@ -114,12 +114,27 @@ public class EncomendaService {
         return encomendas;
     }
 
+    public List<EncomendaDTO> getEncomendasAceitas() {
+
+        List<EncomendaModel> encomendas = encomendaRepository.findByAndamento(AndamentoEncomenda.EM_PREPARO);
+
+
+        if(encomendas.isEmpty()) {
+            throw new ApplicationExceptionHandler(ENCOMENDAS_NOT_FOUND, HttpStatus.NO_CONTENT);
+        }
+
+        return  encomendas
+                .stream()
+                .map(encomendaMapper::encomendaModelToEncomendaDTO)
+                .collect(Collectors.toList());
+    }
+
+
     public void gerarCSV() {
 
         List<EncomendaDTO> encomendas = getEncomendas();
 
         EscritorCSV.Escrever(pegarBoloMaisVendido(), encomendas.size());
-
 
     }
 

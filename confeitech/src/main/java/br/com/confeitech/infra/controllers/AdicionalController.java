@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/adicionais")
+@CrossOrigin(origins = "*")
 public class AdicionalController {
 
     @Autowired

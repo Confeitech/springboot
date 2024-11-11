@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/encomendas")
+@CrossOrigin(origins = "*")
 public class EncomendaController {
 
     @Autowired
@@ -37,6 +38,10 @@ public class EncomendaController {
         return ResponseEntity.ok().body("Relatório CSV criado com sucesso!");
     }
 
+    @GetMapping("/aceitas")
+    public ResponseEntity<List<EncomendaDTO>> getEncomendasAceitas() {
+        return ResponseEntity.ok().body(encomendaService.getEncomendasAceitas());
+    }
 
     @PostMapping
     public ResponseEntity<EncomendaDTO> saveEncomenda(@RequestBody @Valid EncomendaDTO encomendaDTO) {
