@@ -1,9 +1,7 @@
 package br.com.confeitech.infra.controllers;
 
 import br.com.confeitech.application.dtos.AndamentoDTO;
-import br.com.confeitech.application.dtos.CakeDTO;
 import br.com.confeitech.application.dtos.EncomendaDTO;
-import br.com.confeitech.domain.enums.AndamentoEncomenda;
 import br.com.confeitech.domain.services.EncomendaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +39,11 @@ public class EncomendaController {
     @GetMapping("/aceitas")
     public ResponseEntity<List<EncomendaDTO>> getEncomendasAceitas() {
         return ResponseEntity.ok().body(encomendaService.getEncomendasAceitas());
+    }
+
+    @GetMapping("/aguardando")
+    public ResponseEntity<List<EncomendaDTO>> getEncomendasEmAguardo() {
+        return ResponseEntity.ok().body(encomendaService.getEncomendasEmAguardo());
     }
 
     @PostMapping

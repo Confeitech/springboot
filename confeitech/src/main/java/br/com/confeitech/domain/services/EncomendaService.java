@@ -1,14 +1,10 @@
 package br.com.confeitech.domain.services;
 
-import br.com.confeitech.application.dtos.AdicionalDTO;
 import br.com.confeitech.application.dtos.AndamentoDTO;
-import br.com.confeitech.application.dtos.CakeDTO;
 import br.com.confeitech.application.dtos.EncomendaDTO;
 import br.com.confeitech.application.exceptions.ApplicationExceptionHandler;
 import br.com.confeitech.application.utils.EscritorCSV;
 import br.com.confeitech.domain.enums.AndamentoEncomenda;
-import br.com.confeitech.domain.models.AdicionalModel;
-import br.com.confeitech.domain.models.CakeModel;
 import br.com.confeitech.domain.models.EncomendaModel;
 import br.com.confeitech.infra.persistence.mappers.EncomendaMapper;
 import br.com.confeitech.infra.persistence.repositories.EncomendaRepository;
@@ -117,6 +113,21 @@ public class EncomendaService {
     public List<EncomendaDTO> getEncomendasAceitas() {
 
         List<EncomendaModel> encomendas = encomendaRepository.findByAndamento(AndamentoEncomenda.EM_PREPARO);
+
+
+        if(encomendas.isEmpty()) {
+            throw new ApplicationExceptionHandler(ENCOMENDAS_NOT_FOUND, HttpStatus.NO_CONTENT);
+        }
+
+        return  encomendas
+                .stream()
+                .map(encomendaMapper::encomendaModelToEncomendaDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<EncomendaDTO> getEncomendasEmAguardo() {
+
+        List<EncomendaModel> encomendas = encomendaRepository.findByAndamento(AndamentoEncomenda.AGUARDANDO);
 
 
         if(encomendas.isEmpty()) {
