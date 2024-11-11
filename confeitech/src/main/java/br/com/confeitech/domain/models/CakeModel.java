@@ -1,6 +1,7 @@
 package br.com.confeitech.domain.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,6 +21,8 @@ public class CakeModel {
 
 
     @Lob
+    @JsonIgnore // ignoramos no JSON pois não faz sentido retornar um vetor de bytes num JSON!
+    @Column(length = 50 * 1024 * 1024) // 50 Mega Bytes
     private byte[] imagem;
 
     @Column(name = "nome", nullable = false)

@@ -10,6 +10,8 @@ public interface CakeMapper {
 
     @Mapping(constant = "true", target = "active")
     @Mapping(target = "adicionais", ignore = true)
+    @Mapping(target = "imagem", ignore = true)
+
     CakeModel cakeDTOToCakeModel(CakeDTO cakeDTO);
 
     @Mapping(source = "id", target = "id")
