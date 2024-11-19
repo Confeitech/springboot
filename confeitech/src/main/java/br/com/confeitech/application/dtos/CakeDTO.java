@@ -1,10 +1,13 @@
 package br.com.confeitech.application.dtos;
 
+import br.com.confeitech.domain.models.CakeModel;
+import br.com.confeitech.infra.persistence.mappers.AdicionalMapper;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -31,4 +34,16 @@ public record CakeDTO(
         @JsonProperty("ativo")
         Boolean active
 ) {
+
+        public CakeDTO(CakeModel cakeModel) {
+                this(
+                        cakeModel.getId(),
+                        cakeModel.getName(),
+                        cakeModel.getWeight(),
+                        cakeModel.getPrice(),
+                        cakeModel.getDescription(),
+                        null,
+                        cakeModel.getActive()
+                );
+        }
 }

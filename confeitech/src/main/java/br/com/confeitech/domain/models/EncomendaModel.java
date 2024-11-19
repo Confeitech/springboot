@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
@@ -34,10 +36,17 @@ public class EncomendaModel {
     private AndamentoEncomenda andamento;
 
     @Column(nullable = false)
-    private LocalDate data;
+    private LocalDate dataCriacao;
+
+    @Column(nullable = false)
+    private LocalDate dataRetirada;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "carrinho_id")
     private CarrinhoModel carrinho;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserModel user;
 
 }

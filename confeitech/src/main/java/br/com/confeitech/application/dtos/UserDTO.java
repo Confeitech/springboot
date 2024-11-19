@@ -1,5 +1,6 @@
 package br.com.confeitech.application.dtos;
 
+import br.com.confeitech.domain.models.UserModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 
@@ -31,4 +32,16 @@ public record UserDTO(
         @JsonProperty("ativo")
         Boolean active
 ) {
+
+        public UserDTO(UserModel userModel) {
+                this(
+                        userModel.getName(),
+                        userModel.getEmail(),
+                        userModel.getPassword(),
+                        userModel.getPhone(),
+                        userModel.getBirthDate() != null ? userModel.getBirthDate().toString() : null,
+                        null,
+                        userModel.getActive()
+                );
+        }
 }

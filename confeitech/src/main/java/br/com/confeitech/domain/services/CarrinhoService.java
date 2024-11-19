@@ -59,15 +59,15 @@ public class CarrinhoService {
     }
 
 
-    public CarrinhoDTO saveCarrinho(CarrinhoDTO carrinhoDTO) {
-
-        CarrinhoModel carrinho = carrinhoMapper.carrinhoDTOToCarrinhoModel(carrinhoDTO);
-        carrinho.setEncomendas(encomendaService.cadastraEncomendasAntes(carrinhoDTO.encomendas()));
-        carrinho.setDataCompra(LocalDate.now());
-        carrinho.setDataRetirada(LocalDateTime.from(carrinhoDTO.dataRetirada()));
-
-        return carrinhoMapper.carrinhoModelToCarrinhoDTO(carrinhoRepository.save(carrinho));
-
-    }
+//    public CarrinhoDTO saveCarrinho(CarrinhoDTO carrinhoDTO) {
+//
+//        CarrinhoModel carrinho = carrinhoMapper.carrinhoDTOToCarrinhoModel(carrinhoDTO);
+//        carrinho.setEncomendas(encomendaService.cadastraEncomendasAntes(carrinhoDTO.encomendas()));
+//        carrinho.setDataCompra(LocalDate.now());
+//        carrinho.setDataRetirada(LocalDateTime.from(carrinhoDTO.dataRetirada()));
+//
+//        return carrinhoMapper.carrinhoModelToCarrinhoDTO(carrinhoRepository.save(carrinho));
+//
+//    }
 
 }
