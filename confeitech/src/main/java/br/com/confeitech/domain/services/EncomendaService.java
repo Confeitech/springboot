@@ -92,8 +92,8 @@ public class EncomendaService {
 
         return new EncomendaExibicaoDTO(encomendaRepository.save(encomenda));
     }
-//
-//    public EncomendaDTO alterarAndamentoDaEncomenda(AndamentoDTO andamentoDTO, Long id) {
+
+//    public EncomendaExibicaoDTO alterarAndamentoDaEncomenda(AndamentoDTO andamentoDTO, Long id) {
 //
 //        Optional<EncomendaModel> encomenda = encomendaRepository.findById(id);
 //
@@ -104,14 +104,15 @@ public class EncomendaService {
 //        EncomendaModel encomendaModel = encomenda.get();
 //
 //        encomendaModel.setAndamento(andamentoDTO.andamentoEncomenda());
-//        return encomendaMapper.encomendaModelToEncomendaDTO(encomendaRepository.save(encomendaModel));
+//
+//        return new EncomendaExibicaoDTO(encomendaRepository.save(encomendaModel));
 //    }
-
-//    public Set<EncomendaModel> cadastraEncomendasAntes(List<EncomendaDTO> encomendaDTOS) {
+//
+//    public Set<EncomendaModel> cadastraEncomendasAntes(List<EncomendaExibicaoDTO> encomendaDTOS) {
 //
 //        Set<EncomendaModel> encomendas = new HashSet<>();
 //
-//        for(EncomendaDTO encomendaDTO : encomendaDTOS) {
+//        for(EncomendaExibicaoDTO encomendaDTO : encomendaDTOS) {
 //
 //            System.out.println("estou passando aqui");
 //
@@ -120,8 +121,8 @@ public class EncomendaService {
 //
 //        return encomendas;
 //    }
-
-//    public List<EncomendaDTO> getEncomendasAceitas() {
+//
+//    public List<EncomendaExibicaoDTO> getEncomendasAceitas() {
 //
 //        List<EncomendaModel> encomendas = encomendaRepository.findByAndamento(AndamentoEncomenda.EM_PREPARO);
 //
@@ -130,13 +131,17 @@ public class EncomendaService {
 //            throw new ApplicationExceptionHandler(ENCOMENDAS_NOT_FOUND, HttpStatus.NO_CONTENT);
 //        }
 //
-//        return  encomendas
-//                .stream()
-//                .map(encomendaMapper::encomendaModelToEncomendaDTO)
-//                .collect(Collectors.toList());
+//
+//        List<EncomendaExibicaoDTO> encomendasExibicao = new ArrayList<>();
+//
+//        for (EncomendaModel encomenda : encomendas) {
+//            encomendasExibicao.add(new EncomendaExibicaoDTO(encomenda));
+//        }
+//
+//        return encomendasExibicao;
 //    }
 //
-//    public List<EncomendaDTO> getEncomendasEmAguardo() {
+//    public List<EncomendaExibicaoDTO> getEncomendasEmAguardo() {
 //
 //        List<EncomendaModel> encomendas = encomendaRepository.findByAndamento(AndamentoEncomenda.AGUARDANDO);
 //
@@ -145,16 +150,20 @@ public class EncomendaService {
 //            throw new ApplicationExceptionHandler(ENCOMENDAS_NOT_FOUND, HttpStatus.NO_CONTENT);
 //        }
 //
-//        return  encomendas
-//                .stream()
-//                .map(encomendaMapper::encomendaModelToEncomendaDTO)
-//                .collect(Collectors.toList());
+//        List<EncomendaExibicaoDTO> encomendasExibicao = new ArrayList<>();
+//
+//        for (EncomendaModel encomenda : encomendas) {
+//            encomendasExibicao.add(new EncomendaExibicaoDTO(encomenda));
+//        }
+//
+//
+//        return encomendasExibicao;
 //    }
-
-
+//
+//
 //    public void gerarCSV() {
 //
-//        List<EncomendaDTO> encomendas = getEncomendas();
+//        List<EncomendaExibicaoDTO> encomendas = getEncomendas();
 //
 //        EscritorCSV.Escrever(pegarBoloMaisVendido(), encomendas.size());
 //

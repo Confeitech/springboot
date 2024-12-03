@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -216,5 +217,34 @@ public class UserService implements Ordenacao<UserModel> {
                 .collect(Collectors.toList());
 
         return listaOrdenada;
+    }
+
+    public List<UserModel> mapearParaModel(List<UserCreatedDTO> usuariosCriados) {
+
+        List<UserModel> userModels = new ArrayList<>();
+
+        for (UserCreatedDTO userCreatedDTO : usuariosCriados) {
+
+            UserModel user = userMapper.userCreatedToUserModel(userCreatedDTO);
+            userModels.add(user);
+        }
+
+        return userModels;
+
+    }
+
+    public List<UserCreatedDTO> mapearParaCreated(List<UserModel> usuarioCriados) {
+
+        List<UserCreatedDTO> users = new ArrayList<>();
+
+        for (UserModel userModel : usuarioCriados){
+
+            UserCreatedDTO user = userMapper.userModelToUserCreatedDTO(userModel);
+            users.add(user);
+        }
+
+        return users;
+
+
     }
 }
