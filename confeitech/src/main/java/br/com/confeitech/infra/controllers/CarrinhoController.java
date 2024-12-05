@@ -30,9 +30,9 @@ public class CarrinhoController {
         return ResponseEntity.ok().body(carrinhoService.getCarrinhoPorId(id));
     }
 
-//    @PostMapping
-//    public ResponseEntity<CarrinhoDTO> saveEncomenda(@RequestBody @Valid CarrinhoDTO carrinhoDTO) {
-//        return ResponseEntity.status(HttpStatus.CREATED).body(carrinhoService.saveCarrinho(carrinhoDTO));
-//    }
+    @PostMapping
+    public ResponseEntity<CarrinhoDTO> saveEncomenda(@RequestBody @Valid CarrinhoDTO carrinhoDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(carrinhoService.saveCarrinho(carrinhoDTO));
+    }
 
 }

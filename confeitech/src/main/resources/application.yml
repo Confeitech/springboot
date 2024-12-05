@@ -1,5 +1,11 @@
 
 spring:
+
+  webflux:
+    cors:
+      allow-credentials: true
+      allowed-origins: "http://localhost:3000, https://outro-site.com"
+
   servlet:
     multipart:
       max-file-size: 10MB
@@ -54,3 +60,4 @@ server:
       org:
         springframework:
           security=DEBUG:
+

@@ -2,9 +2,7 @@ package br.com.confeitech.domain.models;
 
 import br.com.confeitech.domain.enums.AndamentoEncomenda;
 import jakarta.persistence.*;
-import lombok.Generated;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.springframework.cglib.core.Local;
 
@@ -14,6 +12,8 @@ import java.time.LocalDate;
 @Table(name = "encomenda")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class EncomendaModel {
 
     @Id
