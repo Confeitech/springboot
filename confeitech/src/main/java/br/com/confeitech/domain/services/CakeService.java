@@ -90,7 +90,6 @@ public class CakeService implements Ordenacao<CakeModel> {
 
         cake.setName(cakeDTO.name());
         cake.setPrice(cakeDTO.price());
-        cake.setWeight(cakeDTO.weight());
         cake.setDescription(cakeDTO.description());
         cake.setActive(cakeDTO.active());
         cake.setAdicionais(adicionalService.retornarListaParaMapeamento(cakeDTO.adicionais()));

@@ -13,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 import static br.com.confeitech.application.utils.MessageUtils.CAKE_NOT_FOUND;
@@ -73,12 +75,13 @@ public class CakeController {
     // uma lista dos tipos de mime-type está em https://mimetype.io/all-types/ ou em https://www.sitepoint.com/mime-types-complete-list/
     @CrossOrigin("*")
     @PatchMapping(value = "/imagem/{id}", consumes = "image/*")
-    public ResponseEntity<Void> patchFoto(@PathVariable Long id, @RequestBody byte[] novaFoto) {
+    public ResponseEntity<Void> patchFoto(@PathVariable Long id, @RequestPart("novaFoto") MultipartFile novaFoto) throws IOException {
         if (!repository.existsById(id)) {
             throw new ApplicationExceptionHandler(CAKE_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
 
-        repository.setImagem(id, novaFoto);
+        byte[] fotoBytes = novaFoto.getBytes();
+        repository.setImagem(id, fotoBytes);
 
         return ResponseEntity.status(200).build();
     }

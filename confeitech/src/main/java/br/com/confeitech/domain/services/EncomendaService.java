@@ -131,6 +131,7 @@ public class EncomendaService {
                     encomendaSalva.id(),
                     encomendaSalva.preco(),
                     encomendaSalva.observacoes(),
+                    encomendaSalva.preco(),
                     cakeMapper.cakeDTOToCakeModel(encomendaSalva.bolo()),
                     encomendaSalva.adicionais(),
                     encomendaSalva.andamento(),

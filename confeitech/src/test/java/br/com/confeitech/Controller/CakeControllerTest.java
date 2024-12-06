@@ -84,7 +84,6 @@ public class CakeControllerTest {
                 new CakeDTO(
                         1L,
                         "bolo de chocolate",
-                        1.0,
                         10.0,
                         "um bolo de chocolate muito gostoso",
                         adicionais,
@@ -93,7 +92,6 @@ public class CakeControllerTest {
                 new CakeDTO(
                         2L,
                         "bolo de cenoura",
-                        15.0,
                         15.0,
                         "um bolo de chocolate, só que com cenoura",
                         adicionais,
@@ -108,7 +106,6 @@ public class CakeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L))
                 .andExpect(jsonPath("$[0].nome").value("bolo de chocolate"))
-                .andExpect(jsonPath("$[0].peso").value(1.0))
                 .andExpect(jsonPath("$[0].preco").value(10.0))
                 .andExpect(jsonPath("$[0].descricao").value("um bolo de chocolate muito gostoso"))
                 .andExpect(jsonPath("$[0].ativo").value(true));
@@ -130,7 +127,6 @@ public class CakeControllerTest {
         CakeDTO user = new CakeDTO(
                 3L,
                 "bolo de chocolate",
-                1.0,
                 10.0,
                 "um bolo de chocolate muito gostoso",
                 adicionais,
@@ -143,7 +139,6 @@ public class CakeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(3L))
                 .andExpect(jsonPath("$.nome").value("bolo de chocolate"))
-                .andExpect(jsonPath("$.peso").value(1.0))
                 .andExpect(jsonPath("$.preco").value(10.0))
                 .andExpect(jsonPath("$.descricao").value("um bolo de chocolate muito gostoso"))
                 .andExpect(jsonPath("$.ativo").value(true));
@@ -180,7 +175,6 @@ public class CakeControllerTest {
         CakeDTO user = new CakeDTO(
                 1L,
                 "Bolo de Cenoura com Brigadeiro",
-                2.0,
                 10.0,
                 "Uma versão deliciosa do tradicional bolo de cenoura, com massa macia e vibrante, coberto com uma generosa camada de brigadeiro cremoso. Decorado com granulado de chocolate belga, é uma combinação irresistível e nostálgica que agrada a todas as idades.",
                 adicionais,
@@ -195,7 +189,6 @@ public class CakeControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.nome").value("Bolo de Cenoura com Brigadeiro"))
-                .andExpect(jsonPath("$.peso").value(2.0))
                 .andExpect(jsonPath("$.preco").value(10.0))
                 .andExpect(jsonPath("$.descricao").value("Uma versão deliciosa do tradicional bolo de cenoura, com massa macia e vibrante, coberto com uma generosa camada de brigadeiro cremoso. Decorado com granulado de chocolate belga, é uma combinação irresistível e nostálgica que agrada a todas as idades."));
 

@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Set;
 
-@JsonPropertyOrder({"id", "nome", "peso", "preco", "descricao", "contemGluten", "contemLactose", "ativo", "adicionais"})
+@JsonPropertyOrder({"id", "nome", "preco", "descricao", "contemGluten", "contemLactose", "ativo", "adicionais"})
 public record CakeDTO(
 
         Long id,
@@ -21,9 +21,6 @@ public record CakeDTO(
         @Size(max = 255, message = "Nome do bolo longo demais!")
         @JsonProperty("nome")
         String name,
-        @NotNull(message = "O peso do bolo é um campo obrigatório")
-        @JsonProperty("peso")
-        Double weight,
         @NotNull(message = "O preço do bolo é um campo obrigatório")
         @JsonProperty("preco")
         Double price,
@@ -39,7 +36,6 @@ public record CakeDTO(
                 this(
                         cakeModel.getId(),
                         cakeModel.getName(),
-                        cakeModel.getWeight(),
                         cakeModel.getPrice(),
                         cakeModel.getDescription(),
                         null,

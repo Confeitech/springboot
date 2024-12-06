@@ -27,8 +27,6 @@ public class CakeModel {
 
     @Column(name = "nome", nullable = false)
     private String name;
-    @Column(name = "peso", nullable = false)
-    private Double weight;
     @Column(name = "preco", nullable = false)
     private Double price;
     @Column(name = "descricao", columnDefinition = "TEXT")

@@ -25,6 +25,9 @@ public class EncomendaModel {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String observacoes;
 
+    @Column(nullable = false)
+    private Double peso;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bolo_id", nullable = false)
     private CakeModel bolo;
@@ -32,6 +35,7 @@ public class EncomendaModel {
     @Column
     private String adicionais;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AndamentoEncomenda andamento;
 
