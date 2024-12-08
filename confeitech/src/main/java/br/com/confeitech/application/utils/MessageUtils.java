@@ -20,4 +20,5 @@ public class MessageUtils {
     public static final String ENCOMENDAS_BOLO_NOT_FOUND = "Não existem encomendas com este bolo";
     public static final String CARRINHOS_NOT_FOUND = "Não existem carrinhos cadastrados";
     public static final String CARRINHO_NOT_FOUND = "Carrinho não encontrado";
+    public static final String NO_CAKE_TO_DELETE = "Não existem bolos para serem recuperados";
 }

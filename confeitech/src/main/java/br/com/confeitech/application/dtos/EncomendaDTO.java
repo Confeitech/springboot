@@ -11,6 +11,7 @@ public record EncomendaDTO(
         Long id,
         @NotNull(message = "O preço é um campo obrigatório")
         Double preco,
+        @Size(max = 255, message = "Mensagem de observação longa demais!")
         String observacoes,
         Double peso,
         @NotNull(message = "O bolo é um campo obrigatório")

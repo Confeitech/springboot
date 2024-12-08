@@ -31,6 +31,8 @@ public class CakeService implements Ordenacao<CakeModel> {
     @Autowired
     private AdicionalService adicionalService;
 
+    Stack<Long> pilha = new Stack<>();
+
     public List<CakeDTO> getCakes() {
 
         List<CakeModel> cakes = cakeRepository.findByActive(true);
@@ -109,6 +111,8 @@ public class CakeService implements Ordenacao<CakeModel> {
 
         cake.setActive(false);
 
+        pilha.push(cake.getId());
+
         cakeRepository.save(cake);
     }
 
@@ -123,6 +127,16 @@ public class CakeService implements Ordenacao<CakeModel> {
         return optionalCake.get();
     }
 
+    public void desfazerDelecao() {
+
+        if(pilha.isEmpty()) {
+        throw new ApplicationExceptionHandler(NO_CAKE_TO_DELETE, HttpStatus.NOT_FOUND);
+        }
+
+        CakeModel bolo = getCakePerId(pilha.pop());
+        bolo.setActive(true);
+        cakeRepository.save(bolo);
+    }
 
     //métodos próprios (além do crud)
 

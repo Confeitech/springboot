@@ -13,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 import static br.com.confeitech.application.utils.MessageUtils.CAKE_NOT_FOUND;
@@ -65,31 +67,36 @@ public class CakeController {
         cakeService.deleteCake(id);
     }
 
+    @PatchMapping("/desfazer")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void desteletarCake() {
+        cakeService.desfazerDelecao();
+    }
+
 
 
     // atualiza a foto de uma planta
     // "consumes" indica o tipo de dado que será aceito no corpo da requisição
     // o mime-type indicado no "consumes" é image/*, que indica que qualquer imagem será aceita
     // uma lista dos tipos de mime-type está em https://mimetype.io/all-types/ ou em https://www.sitepoint.com/mime-types-complete-list/
-    @CrossOrigin("*")
-    @PatchMapping(value = "/imagem/{id}", consumes = "image/*")
-    public ResponseEntity<Void> patchFoto(@PathVariable Long id, @RequestBody byte[] novaFoto) {
+    @CrossOrigin("")
+    @PatchMapping(value = "/imagem/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> patchFoto(@PathVariable Long id, @RequestParam("novaFoto") MultipartFile novaFoto) {
         if (!repository.existsById(id)) {
             throw new ApplicationExceptionHandler(CAKE_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
 
-        repository.setImagem(id, novaFoto);
+        try {
+            byte[] novaFotoBytes = novaFoto.getBytes();
+            repository.setImagem(id, novaFotoBytes);
+        } catch (IOException e) {
+            throw new ApplicationExceptionHandler("Erro ao processar a imagem.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-
-
-
-    // recupera a foto de uma planta
-    // "produces" indica o tipo de dado que será entregue no corpo da resposta
-    // o mime-type indicado no "produces" é image/jpeg (MediaType.IMAGE_JPEG_VALUE), mas, na prática, qualquer imagem funcionará
-    // uma lista dos tipos de mime-type está em https://mimetype.io/all-types/ ou em https://www.sitepoint.com/mime-types-complete-list/
+    @CrossOrigin("")
     @GetMapping(value = "/imagem/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getImagem(@PathVariable Long id) {
         if (!repository.existsById(id)) {
@@ -98,8 +105,14 @@ public class CakeController {
 
         byte[] foto = repository.getImagem(id);
 
-        // esse header "content-disposition" indica o nome do arquivo em caso de download em navegador
-        return ResponseEntity.status(200).header("content-disposition",
-                "attachment; filename=\"foto-planta.jpg\"").body(foto);
+        if (foto == null || foto.length == 0) {
+            throw new ApplicationExceptionHandler("Imagem não encontrada", HttpStatus.NOT_FOUND);
+        }
+
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentType(MediaType.IMAGE_JPEG)
+                .header("content-disposition", "inline; filename=\"novaFoto.jpg\"") // O "inline" permite visualização no navegador
+                .body(foto);
     }
 }

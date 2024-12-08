@@ -18,7 +18,7 @@ public record CakeDTO(
 
         Long id,
         @NotBlank(message = "O nome do bolo é um campo obrigatório")
-        @Size(max = 255, message = "Nome do bolo longo demais!")
+        @Size(max = 100, message = "Nome do bolo longo demais!")
         @JsonProperty("nome")
         String name,
         @NotNull(message = "O preço do bolo é um campo obrigatório")
