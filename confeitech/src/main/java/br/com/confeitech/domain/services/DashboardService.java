@@ -40,8 +40,8 @@ public class DashboardService {
                 null,
                 qtdEncomendasNaoConfirmadas,
                 boloMaisVendidoDeTodos,
-                List.of(2,4),
-                List.of(2, 4)
+                List.of(2,4,9,5,3,1,8),
+                List.of(8,1,3,5,9,4,2)
         );
     }
 
