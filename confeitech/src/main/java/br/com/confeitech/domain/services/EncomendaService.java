@@ -188,10 +188,10 @@ public class EncomendaService {
 
 
     public void gerarCSV() {
-
-        List<EncomendaExibicaoDTO> encomendas = getEncomendas();
-
-        EscritorCSV.Escrever(pegarBoloMaisVendido(), encomendas.size());
+//
+//        List<EncomendaExibicaoDTO> encomendas = getEncomendas();
+//
+//        EscritorCSV.Escrever(pegarBoloMaisVendido(), encomendas.size());
 
     }
 

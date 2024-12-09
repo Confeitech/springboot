@@ -19,13 +19,21 @@ public interface EncomendaRepository extends JpaRepository<EncomendaModel, Long>
 //    @Query("SELECT COUNT(e) FROM Encomenda e WHERE e.andamento = 2")
 //    Long countByAndamentoConcluido();
 
-//    @Query(value = """
-//            SELECT COUNT(e)
-//            FROM Encomenda e
-//            WHERE e.andamento = 'PRONTA'
-//            AND e.dataCriacao >= :dataInicio
-//            """)
-//    Long countByAndamentoConcluidoUltimoMes(@Param("dataInicio") LocalDate dataInicio);
+    @Query(value = """
+    SELECT COUNT(*)\s
+    FROM encomenda\s
+    WHERE data_criacao >= :dataInicio\s
+      AND andamento = 'PRONTA'
+    """, nativeQuery = true)
+    Long qtdEncomendasConcluidasUltimoMes(@Param("dataInicio") LocalDate dataInicio);
+
+
+    @Query(value = """
+    SELECT COUNT(*)\s
+    FROM encomenda\s
+    WHERE data_criacao >= :dataInicio
+    """, nativeQuery = true)
+    Long qtdEncomendasFeitasUltimoMes(@Param("dataInicio") LocalDate dataInicio);
 
     @Query(value = """
         SELECT DAYNAME(data_criacao) AS diaSemana

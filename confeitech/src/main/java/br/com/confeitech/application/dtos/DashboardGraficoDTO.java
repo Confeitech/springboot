@@ -8,6 +8,7 @@ public record DashboardGraficoDTO(
 
         String movimentacaoSemana,
         Long qtdEncomendasUltimoMes,
+        Long qtdEncomendasConcluidasUltimoMes,
         Integer qtdEncomendasNaoAceitasSemana,
         String boloMaisVendido,
         List<Integer> graficoVendasSemana,

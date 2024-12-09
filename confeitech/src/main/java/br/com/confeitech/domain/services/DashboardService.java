@@ -29,15 +29,18 @@ public class DashboardService {
         Integer qtdEncomendasNaoConfirmadas = encomendaService.getEncomendasEmAguardo().size();
 
         LocalDate dataInicio = LocalDate.now().minusMonths(1);
-//        Long qtdEncomendasEntreguesNoUltimoMes = encomendaRepository.countByAndamentoConcluidoUltimoMes(dataInicio);
+        Long qtdEncomendasEntreguesNoUltimoMes = encomendaRepository.qtdEncomendasFeitasUltimoMes(dataInicio);
 
         String diaDaSemanaComEncomendasMaisFrequentes = encomendaRepository.diaDeEncomendaMaisFrequenteSemana();
 
         String boloMaisVendidoDeTodos = cakeService.getCakePerId(encomendaRepository.boloMaisComprado()).getName();
 
+        Long encomendasConcluidas = encomendaRepository.qtdEncomendasConcluidasUltimoMes(dataInicio);
+
         return new DashboardGraficoDTO(
                 diaDaSemanaComEncomendasMaisFrequentes,
-                null,
+                qtdEncomendasEntreguesNoUltimoMes,
+                encomendasConcluidas,
                 qtdEncomendasNaoConfirmadas,
                 boloMaisVendidoDeTodos,
                 List.of(2,4,9,5,3,1,8),
