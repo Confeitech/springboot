@@ -62,6 +62,24 @@ public class EncomendaService {
         return encomendasExibicao;
     }
 
+    public List<EncomendaExibicaoDTO> getEncomendaPorUsuario(Long id) {
+
+        List<EncomendaModel> encomendas = encomendaRepository.findByUserId(id);
+
+        if (encomendas.isEmpty()) {
+            throw new ApplicationExceptionHandler(ENCOMENDAS_NOT_FOUND, HttpStatus.NO_CONTENT);
+        }
+
+        List<EncomendaExibicaoDTO> encomendasExibicao = new ArrayList<>();
+
+        for (EncomendaModel encomenda : encomendas) {
+            encomendasExibicao.add(new EncomendaExibicaoDTO(encomenda));
+        }
+
+
+        return encomendasExibicao;
+    }
+
     public EncomendaExibicaoDTO getEncomendaPerId(Long id) {
 
         Optional<EncomendaModel> encomenda = encomendaRepository.findById(id);

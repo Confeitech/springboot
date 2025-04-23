@@ -1,6 +1,18 @@
 
 spring:
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: scortuzzi@gmail.com
+    password: tU*pJO66W*t@WK2T
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
   webflux:
     cors:
       allow-credentials: true
@@ -60,4 +72,3 @@ server:
       org:
         springframework:
           security=DEBUG:
-

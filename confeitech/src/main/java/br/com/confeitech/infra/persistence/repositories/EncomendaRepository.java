@@ -70,4 +70,6 @@ public interface EncomendaRepository extends JpaRepository<EncomendaModel, Long>
             "ORDER BY COUNT(e.bolo_id) DESC " +
             "LIMIT 1", nativeQuery = true)
     Optional<String> findMostFrequentNome();
+
+    List<EncomendaModel> findByUserId(Long userId);
 }

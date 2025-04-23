@@ -2,9 +2,10 @@ package br.com.confeitech.infra.controllers;
 
 import br.com.confeitech.application.dtos.UserCreatedDTO;
 import br.com.confeitech.application.dtos.UserDTO;
+import br.com.confeitech.application.utils.EmailService;
+import br.com.confeitech.domain.models.UserModel;
 import br.com.confeitech.domain.services.UserService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EmailService emailService;
+
+
     @GetMapping
     public ResponseEntity<List<UserCreatedDTO>> getUser() {
         return ResponseEntity.ok().body(userService.getUsers());
@@ -29,6 +34,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserCreatedDTO> getUserPerId(@PathVariable Long id) {
         return ResponseEntity.ok().body(userService.getUser(id));
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<UserCreatedDTO> getUserByEmailAndPassword(@RequestParam String email, @RequestParam String password) {
+        return ResponseEntity.ok().body(userService.buscarPorEmailESenha(email, password));
     }
 
     @GetMapping("/getAlphabetical")
@@ -50,6 +60,14 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+    }
+
+    @GetMapping("/email")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void enviarEmail() {
+
+        emailService.enviarEmail();
+
     }
 
 }

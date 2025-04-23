@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: confeitech
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"
+    networks:
+      - confeitech-net
+
+  app:
+    image: scortuzzi/confeitechbackend:1.7
+    container_name: confeitechbackend
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    networks:
+      - confeitech-net
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+
+networks:
+  confeitech-net:
+    driver: bridge

@@ -53,4 +53,6 @@ public class EncomendaModel {
     @JoinColumn(name = "user_id")
     private UserModel user;
 
+
+
 }

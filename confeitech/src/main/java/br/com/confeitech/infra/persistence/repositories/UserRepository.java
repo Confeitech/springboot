@@ -12,4 +12,9 @@ public interface UserRepository extends JpaRepository<UserModel, Long>  {
     List<UserModel> findByActive(Boolean active);
 
     Optional<UserModel> findByIdAndActive(Long id, Boolean active);
+
+    Optional<UserModel> findByEmailAndPassword(String email, String password);
+
+    Optional<UserModel> findByEmail(String email);
+
 }

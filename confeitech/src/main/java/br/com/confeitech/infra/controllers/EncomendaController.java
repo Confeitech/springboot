@@ -47,6 +47,11 @@ public class EncomendaController {
         return ResponseEntity.ok().body(encomendaService.getEncomendasEmAguardo());
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<EncomendaExibicaoDTO>> getEncomendaPorUsuario(@PathVariable Long id) {
+        return ResponseEntity.ok().body(encomendaService.getEncomendaPorUsuario(id));
+    }
+
     @PostMapping
     public ResponseEntity<EncomendaExibicaoDTO> saveEncomenda(@RequestBody @Valid EncomendaDTO encomendaDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(encomendaService.saveEncomenda(encomendaDTO));

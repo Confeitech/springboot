@@ -197,6 +197,22 @@ public class UserService implements Ordenacao<UserModel> {
 
 
 
+    public UserCreatedDTO buscarPorEmailESenha(String email, String rawPassword) {
+        Optional<UserModel> optionalUser = userRepository.findByEmail(email);
+
+        if (optionalUser.isEmpty()) {
+            throw new ApplicationExceptionHandler("Usuário não encontrado com as credenciais fornecidas.", HttpStatus.NOT_FOUND);
+        }
+
+        UserModel user = optionalUser.get();
+
+        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+            throw new ApplicationExceptionHandler("Usuário não encontrado com as credenciais fornecidas.", HttpStatus.NOT_FOUND);
+        }
+
+        return userMapper.userModelToUserCreatedDTO(user);
+    }
+
     public UserModel getUserPerIdAndActive(Long id) {
         Optional<UserModel> optionalUser = userRepository.findByIdAndActive(id, true);
 
