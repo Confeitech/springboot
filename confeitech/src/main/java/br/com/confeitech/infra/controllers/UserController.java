@@ -1,5 +1,6 @@
 package br.com.confeitech.infra.controllers;
 
+import br.com.confeitech.application.dtos.EmailRequest;
 import br.com.confeitech.application.dtos.UserCreatedDTO;
 import br.com.confeitech.application.dtos.UserDTO;
 import br.com.confeitech.application.utils.EmailService;
@@ -28,6 +29,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserCreatedDTO>> getUser() {
+        userService.fodase("doiszerodoiscinco@gmail.com", "scortuzzi@gmail.com", "kryi stwg wyya hbni", "smtp.gmail.com", "587");
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
@@ -62,12 +64,11 @@ public class UserController {
         userService.deleteUser(id);
     }
 
-    @GetMapping("/email")
+    @PostMapping("/email")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void enviarEmail() {
-
-        emailService.enviarEmail();
-
+    public void enviarEmail(@RequestBody EmailRequest request) {
+        userService.fodase(request.des(), "scortuzzi@gmail.com", "kryi stwg wyya hbni", "smtp.gmail.com", "587");
     }
+
 
 }
