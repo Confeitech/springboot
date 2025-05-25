@@ -2,13 +2,12 @@ package br.com.confeitech.infra.controllers;
 
 import br.com.confeitech.application.dtos.UserCreatedDTO;
 import br.com.confeitech.application.dtos.UserDTO;
-import br.com.confeitech.application.utils.EmailService;
-import br.com.confeitech.domain.models.UserModel;
 import br.com.confeitech.domain.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,10 +21,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private EmailService emailService;
-
-
     @GetMapping
     public ResponseEntity<List<UserCreatedDTO>> getUser() {
         return ResponseEntity.ok().body(userService.getUsers());
@@ -36,8 +31,8 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUser(id));
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<UserCreatedDTO> getUserByEmailAndPassword(@RequestParam String email, @RequestParam String password) {
+    @GetMapping("/login/{email}/{password}")
+    public ResponseEntity<UserCreatedDTO> getUserByEmailAndPassword(@PathVariable String email, @PathVariable String password) {
         return ResponseEntity.ok().body(userService.buscarPorEmailESenha(email, password));
     }
 
@@ -60,14 +55,16 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+
     }
 
-    @GetMapping("/email")
+    @PostMapping("/email/{destinatario}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void enviarEmail() {
-
-        emailService.enviarEmail();
-
+    public void enviarEmail(@PathVariable String destinatario) {
+        userService.fodase(destinatario);
     }
+
+
+
 
 }

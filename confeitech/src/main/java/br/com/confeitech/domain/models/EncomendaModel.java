@@ -46,10 +46,6 @@ public class EncomendaModel {
     private LocalDate dataRetirada;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "carrinho_id")
-    private CarrinhoModel carrinho;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserModel user;
 

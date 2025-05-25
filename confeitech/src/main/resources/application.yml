@@ -64,6 +64,7 @@ spring:
 #    locations: ${FLYWAY_LOCATIONS:classpath:db/migration}
 
 server:
+  adress: 0.0.0.0
   port: 8080
   shutdown: graceful
 

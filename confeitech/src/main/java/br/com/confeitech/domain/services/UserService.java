@@ -8,18 +8,20 @@ import br.com.confeitech.domain.models.CakeModel;
 import br.com.confeitech.infra.persistence.mappers.UserMapper;
 import br.com.confeitech.domain.models.UserModel;
 import br.com.confeitech.infra.persistence.repositories.UserRepository;
+import jakarta.mail.*;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 import static br.com.confeitech.application.utils.MessageUtils.*;
@@ -41,6 +43,71 @@ public class UserService implements Ordenacao<UserModel> {
     @Autowired
     private EnderecoService enderecoService;
 
+    @Value("${mail.username}")
+    private String username;
+
+    @Value("${mail.password}")
+    private String password;
+
+    @Value("${mail.smtp.host}")
+    private String host;
+
+    @Value("${mail.smtp.port}")
+    private String port;
+
+
+
+    private void getEmail(String destinatario, String assunto, String corpo) {
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.port", port);
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
+            message.setSubject("Código de verificação");
+            message.setText("seu código de verificação é:" + ThreadLocalRandom.current().nextInt(1000, 10000));
+            Transport.send(message);
+            System.out.println("E-mail enviado para: " + destinatario);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Falha ao enviar e-mail: " + e.getMessage(), e);
+        }
+    }
+
+    public void fodase(String destinatario) {
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.port", port);
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
+            message.setSubject("Código de verificação");
+            message.setText("seu código de verificação é:" + ThreadLocalRandom.current().nextInt(1000, 10000));
+            Transport.send(message);
+            System.out.println("E-mail enviado para: " + destinatario);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Falha ao enviar e-mail: " + e.getMessage(), e);
+        }
+    }
 
 
     /**
@@ -263,4 +330,6 @@ public class UserService implements Ordenacao<UserModel> {
 
 
     }
+
+
 }
