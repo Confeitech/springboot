@@ -41,7 +41,7 @@ jobs:
 
       - name: Run tests with Maven
         run: mvn -B test
-        working-directory: ../../
+        working-directory: ./
         
   docker:
     runs-on: ubuntu-latest
