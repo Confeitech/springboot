@@ -21,7 +21,7 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B package -DskipTests
-        working-directory: ./confeitech
+        working-directory: ./
 
 
   test:
@@ -39,7 +39,7 @@ jobs:
 
       - name: Run tests with Maven
         run: mvn -B test
-        working-directory: ./confeitech
+        working-directory: ./
         
   docker:
     runs-on: ubuntu-latest
