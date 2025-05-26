@@ -21,4 +21,4 @@ jobs:
         distribution: 'temurin'  # ou 'zulu', 'adopt', etc.
 
     - name: Construir e rodar testes com Maven
-      run: mvn -B package -DskipTests
+      run: mvn -B verify
