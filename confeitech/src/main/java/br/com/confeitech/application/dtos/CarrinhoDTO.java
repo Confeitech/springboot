@@ -1,8 +1,5 @@
 package br.com.confeitech.application.dtos;
 
-import br.com.confeitech.domain.models.CarrinhoModel;
-import br.com.confeitech.domain.models.EncomendaModel;
-import br.com.confeitech.domain.models.UserModel;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;

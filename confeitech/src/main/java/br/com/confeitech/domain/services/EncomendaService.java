@@ -136,35 +136,35 @@ public class EncomendaService {
         return new EncomendaExibicaoDTO(encomendaRepository.save(encomendaModel));
     }
 
-    public Set<EncomendaModel> cadastraEncomendasAntes(List<EncomendaDTO> encomendaDTOS) {
-
-        Set<EncomendaModel> encomendas = new HashSet<>();
-
-        for(EncomendaDTO encomendaDTO : encomendaDTOS) {
-
-            System.out.println("estou passando aqui");
-
-            EncomendaExibicaoDTO encomendaSalva = saveEncomenda(encomendaDTO);
-            EncomendaModel encomendaRetorno = new EncomendaModel(
-                    encomendaSalva.id(),
-                    encomendaSalva.preco(),
-                    encomendaSalva.observacoes(),
-                    encomendaSalva.preco(),
-                    cakeMapper.cakeDTOToCakeModel(encomendaSalva.bolo()),
-                    encomendaSalva.adicionais(),
-                    encomendaSalva.andamento(),
-                    encomendaSalva.dataCriacao(),
-                    encomendaSalva.dataRetirada(),
-                    null,
-                    userMapper.userDTOToUserModel(encomendaSalva.userDTO())
-
-            );
-
-            encomendas.add(encomendaRetorno);
-        }
-
-        return encomendas;
-    }
+//    public Set<EncomendaModel> cadastraEncomendasAntes(List<EncomendaDTO> encomendaDTOS) {
+//
+//        Set<EncomendaModel> encomendas = new HashSet<>();
+//
+//        for(EncomendaDTO encomendaDTO : encomendaDTOS) {
+//
+//            System.out.println("estou passando aqui");
+//
+//            EncomendaExibicaoDTO encomendaSalva = saveEncomenda(encomendaDTO);
+//            EncomendaModel encomendaRetorno = new EncomendaModel(
+//                    encomendaSalva.id(),
+//                    encomendaSalva.preco(),
+//                    encomendaSalva.observacoes(),
+//                    encomendaSalva.preco(),
+//                    cakeMapper.cakeDTOToCakeModel(encomendaSalva.bolo()),
+//                    encomendaSalva.adicionais(),
+//                    encomendaSalva.andamento(),
+//                    encomendaSalva.dataCriacao(),
+//                    encomendaSalva.dataRetirada(),
+//                    null,
+//                    userMapper.userDTOToUserModel(encomendaSalva.userDTO())
+//
+//            );
+//
+//            encomendas.add(encomendaRetorno);
+//        }
+//
+//        return encomendas;
+//    }
 
     public List<EncomendaExibicaoDTO> getEncomendasAceitas() {
 
