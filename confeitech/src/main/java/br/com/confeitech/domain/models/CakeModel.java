@@ -27,6 +27,10 @@ public class CakeModel {
 
     @Column(name = "nome", nullable = false)
     private String name;
+
+    @Column(name = "image")
+    private String image;
+
     @Column(name = "preco", nullable = false)
     private Double price;
     @Column(name = "descricao", columnDefinition = "TEXT")

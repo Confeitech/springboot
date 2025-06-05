@@ -21,6 +21,9 @@ public record CakeDTO(
         @Size(max = 100, message = "Nome do bolo longo demais!")
         @JsonProperty("nome")
         String name,
+
+        String image,
+
         @NotNull(message = "O preço do bolo é um campo obrigatório")
         @JsonProperty("preco")
         Double price,
@@ -36,6 +39,7 @@ public record CakeDTO(
                 this(
                         cakeModel.getId(),
                         cakeModel.getName(),
+                        cakeModel.getImage(),
                         cakeModel.getPrice(),
                         cakeModel.getDescription(),
                         null,

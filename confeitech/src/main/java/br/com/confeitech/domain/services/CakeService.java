@@ -80,8 +80,8 @@ public class CakeService implements Ordenacao<CakeModel> {
 
         CakeModel cake = cakeMapper.cakeDTOToCakeModel(cakeDTO);
         cake.setAdicionais(adicionalService.retornarListaParaMapeamento(cakeDTO.adicionais()));
+        cake.setImage(cakeDTO.image());
         cakeRepository.save(cake);
-
         return cakeMapper.cakeModelToCakeDTO(cake);
     }
 
